@@ -1,0 +1,11 @@
+.wrapper {
+    width: 100%;
+    max-width: 500px;
+}
+
+.row-input {
+    display: inline-flex;
+    margin-top: 0.2em;
+    margin-bottom: 0.4em;
+    margin-left: 0px;
+}

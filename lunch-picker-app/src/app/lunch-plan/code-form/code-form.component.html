@@ -1,0 +1,20 @@
+<div class="wrapper panel">
+  <h5>Decide what's for lunch together</h5>
+  <form (ngSubmit)="onSubmit()" #codeForm="ngForm">
+    <div class="row panel-row">
+      <input type="text" [(ngModel)]="plan.code"
+        class="form-control inline-input"
+        id="code"
+        name="code"
+        placeholder="Enter code"
+        maxlength="6"
+        required
+        #code="ngModel">
+      <button type="submit" [disabled]="!codeForm.form.valid"
+        class="btn btn-info inline-button">Go!</button>
+    </div>
+    <div class="row form-error" *ngIf="displayError">
+        <p>Session not found!</p>
+    </div>
+  </form>
+</div>

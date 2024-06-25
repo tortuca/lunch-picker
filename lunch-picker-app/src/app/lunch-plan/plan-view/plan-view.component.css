@@ -1,0 +1,29 @@
+.wrapper {
+    width: 100%;
+    max-width: 500px;
+    text-align: center;
+}
+
+.row-input {
+    display: inline-flex;
+    margin-top: 0.2em;
+    margin-bottom: 0.4em;
+    margin-left: 0px;
+}
+
+.row-button {
+    margin-bottom: 1em;
+}
+
+.btn {
+    margin-left: 8px;
+}
+
+.list-group-item {
+    background-color: ghostwhite;
+    margin-top: 0.4em;
+}
+
+.font-weight-bold {
+    font-weight: bold;
+}

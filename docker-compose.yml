@@ -1,0 +1,14 @@
+version: '3.8'
+services:
+  backend:
+    image: lunch-picker-backend
+    build: ./lunch-picker-backend
+    ports:
+      - "8080:8080"
+  frontend:
+    image: lunch-picker-app
+    build: ./lunch-picker-app
+    depends_on:
+      - backend
+    ports:
+      - "80:80"

@@ -1,0 +1,14 @@
+.content {
+    display: flex;
+    justify-content: space-around;
+    width: 100%;
+    margin-bottom: 8rem;
+    background-color: #F8E16C;
+}
+
+@media screen and (max-width: 500px) {
+  .content {
+    flex-direction: column;
+    height: max-content;
+  }
+}

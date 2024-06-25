@@ -1,0 +1,16 @@
+<div class="wrapper">
+  <form (ngSubmit)=onSubmit() *ngIf="plan.active" #venueForm="ngForm">
+    <div class="row row-input">
+      <input type="text" [(ngModel)]="newVenue"
+        class="form-control inline-input"
+        id="venue"
+        name="venue"
+        placeholder="New venue"
+        maxlength="50"
+        required
+        #venue="ngModel">
+      <button type="submit" [disabled]="!venueForm.form.valid" 
+        class="btn btn-info inline-button">Add</button>
+    </div>
+  </form>
+</div>
