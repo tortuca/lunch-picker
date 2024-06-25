@@ -27,3 +27,9 @@
 .font-weight-bold {
     font-weight: bold;
 }
+
+.card-body {
+    background-color: #D4D2D5;
+    padding: 1em;
+    border-radius: 4px;
+}

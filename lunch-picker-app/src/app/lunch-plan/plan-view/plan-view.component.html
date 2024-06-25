@@ -26,7 +26,7 @@
               class="btn btn-outline-info inline-button"><fa-icon [icon]="faCopy"></fa-icon></button>
         </div>
 
-        <div *ngIf="isEmptyVenues()">
+        <div class="card-body" *ngIf="isEmptyVenues()">
             List of restaurants:
             <ul class="list-group" *ngFor="let place of plan.venues">
                 <li class="list-group-item">{{ place }}</li>
