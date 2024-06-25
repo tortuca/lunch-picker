@@ -56,7 +56,6 @@ export class PlanViewComponent implements OnInit {
   closePlan() {
     this.lunchPlanService.close(this.plan.code).subscribe(data => {
       this.choice = data.choice;
-      console.log('the decision: ', data.choice);
     })
   }
 
@@ -70,6 +69,10 @@ export class PlanViewComponent implements OnInit {
 
   isEmptyVenues() {
     return (this.plan.venues.length !== 0);
+  }
+  
+  isValidPlan() {
+    return this.plan.active;
   }
 
   revealLink() {

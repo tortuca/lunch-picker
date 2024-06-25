@@ -1,4 +1,4 @@
-version: '3.8'
+version: '1.0'
 services:
   backend:
     image: lunch-picker-backend
@@ -11,4 +11,4 @@ services:
     depends_on:
       - backend
     ports:
-      - "80:80"
+      - "4200:4200"

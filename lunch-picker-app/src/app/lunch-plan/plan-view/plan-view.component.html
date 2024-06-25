@@ -15,7 +15,7 @@
                   class="btn btn-info"><fa-icon [icon]="faHome"></fa-icon></button>
                 <button type="button" (click)="revealLink()"
                   class="btn btn-info"><fa-icon [icon]="faShareSquare"></fa-icon></button>
-                <button type="submit" [disabled]="!plan.active"
+                <button type="submit" [disabled]="!isValidPlan()"
                   class="btn btn-info">Make the choice</button>
             </form>
         </div>

@@ -10,7 +10,7 @@ import java.util.Map;
 import java.util.UUID;
 
 @Controller
-@CrossOrigin(origins = "http://localhost:4200")
+@CrossOrigin(origins = "http://localhost:4200, http://localhost")
 public class LunchController {
     Map<String, LunchPlan> sessions = new HashMap<>();
 

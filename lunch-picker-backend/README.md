@@ -1,4 +1,4 @@
-# How About Lunch
+# Lunch Picker
 
 A lunch picker - to collectively decide on a location to eat for lunch.
 
@@ -109,29 +109,15 @@ Run the application using Java and the executable JAR file produced by the Gradl
 listening to port `8080`.
 
 ```console
-$ java -jar build/libs/lunch-picker.jar
+$ java -jar build/libs/lunch-picker-0.0.1-SNAPSHOT.jar
 ```
 
 ### Run the tests
-
-There are two types of tests, the unit tests and the functional tests. These can be executed as follows.
 
 - Run unit tests only
 
   ```console
   $ ./gradlew test
-  ```
-
-- Run functional tests only
-
-  ```console
-  $ ./gradlew functionalTest
-  ```
-
-- Run both unit and functional tests
-
-  ```console
-  $ ./gradlew check
   ```
 
 ### Run the application
@@ -140,4 +126,14 @@ Run the application which will be listening on port `8080`.
 
 ```console
 $ ./gradlew bootRun
+```
+
+### Build container
+```
+docker build -t lunch-picker .
+```
+
+### Run container
+```
+docker run -it -p 8080:8080 lunch-picker
 ```
