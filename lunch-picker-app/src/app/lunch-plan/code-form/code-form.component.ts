@@ -21,10 +21,10 @@ export class CodeFormComponent {
     }
   
   onSubmit() {
-    this.lunchPlanService.get(this.plan.code).subscribe(
-      () => this.goToLunchPlan(),
-      err => this.displayError = true
-    );
+    this.lunchPlanService.get(this.plan?.code).subscribe({
+      next: () => this.goToLunchPlan(),
+      error: () => this.displayError = true
+    });
   }
 
   goToLunchPlan() {

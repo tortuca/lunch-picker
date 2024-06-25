@@ -17,6 +17,7 @@ export class PlanViewComponent implements OnInit {
   venue: string = '';
   choice: string = '';
   url: string = '';
+  enableClose: boolean = false;
   showLink: boolean = false;
 
   // font awesome
@@ -36,7 +37,7 @@ export class PlanViewComponent implements OnInit {
       const code = this.route.snapshot.params['code'];
       if (code !== undefined && code.length !== 0) {
         this.getPlan(code);
-        this.choice = this.plan.choice;
+        this.enableClose = this.isValidPlan();
       }
     })
   }
@@ -48,15 +49,23 @@ export class PlanViewComponent implements OnInit {
   }
 
   getPlan(code: string) {
-    this.lunchPlanService.get(code).subscribe(data => {
-      this.plan = data;
+    this.lunchPlanService.get(code).subscribe({
+      next: data => {
+        this.plan = data;
+        this.choice = this.plan.choice;
+      },
+      error: err => console.log(err)
     });
   }
 
   closePlan() {
-    this.lunchPlanService.close(this.plan.code).subscribe(data => {
-      this.choice = data.choice;
-    })
+    this.lunchPlanService.close(this.plan?.code).subscribe({
+      next: data => {
+        this.choice = data.choice;
+        this.enableClose = this.isValidPlan();
+      },
+      error: err => console.log(err)
+    });
   }
 
   goToLunchPlan() {
@@ -72,7 +81,7 @@ export class PlanViewComponent implements OnInit {
   }
   
   isValidPlan() {
-    return this.plan.active;
+    return this.plan.active || this.choice === undefined;
   }
 
   revealLink() {

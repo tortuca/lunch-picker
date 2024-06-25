@@ -10,10 +10,10 @@
     <div class="bottom">
         <hr>
         <div class="row row-button">
-            <form (ngSubmit)="closePlan()" #closeForm="ngForm" *ngIf="plan.active">
+            <form (ngSubmit)="closePlan()" #closeForm="ngForm">
                 <button type="button" (click)="goHome()"
                   class="btn btn-info"><fa-icon [icon]="faHome"></fa-icon></button>
-                <button type="button" (click)="revealLink()"
+                <button type="button" (click)="revealLink()" [disabled]="!isValidPlan()"
                   class="btn btn-info"><fa-icon [icon]="faShareSquare"></fa-icon></button>
                 <button type="submit" [disabled]="!isValidPlan()"
                   class="btn btn-info">Make the choice</button>
