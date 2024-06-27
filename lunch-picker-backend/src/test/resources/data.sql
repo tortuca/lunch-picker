@@ -1,0 +1,2 @@
+insert into users (id, username, active, created_at) values ('00001111-aaaa-bbbb-cccc-000000000000', 'test_user', true, now());
+-- insert into users (username, active, created_at) values ('test_user', true, now());

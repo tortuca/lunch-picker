@@ -4,6 +4,11 @@ import com.tortuca.lunchpicker.model.LunchPlan;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 
-//@Repository
-//public interface LunchPlanRepository extends CrudRepository<LunchPlan, String>{}
+import java.util.UUID;
+
+@Repository
+public interface LunchPlanRepository extends CrudRepository<LunchPlan, UUID>{
+    LunchPlan findByCode(String code);
+    LunchPlan findByCodeAndActive(String code, boolean active);
+}
 
