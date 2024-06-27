@@ -1,6 +1,6 @@
-import { Component, EventEmitter, Output } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { LunchPlan } from '../lunch-plan';
-import { ActivatedRoute, Router } from '@angular/router';
+import { Router } from '@angular/router';
 import { LunchPlanService } from '../lunch-plan.service';
 
 @Component({
@@ -9,23 +9,39 @@ import { LunchPlanService } from '../lunch-plan.service';
   styleUrl: './plan-form.component.css'
 })
 export class PlanFormComponent {
+  @Input() username : string;
   @Output() change = new EventEmitter<LunchPlan>();
 
+  savedUsername: string;
   code: string = '';
+  submitted: boolean = false;
+  displayError: boolean = false;
 
   constructor(
-    private route: ActivatedRoute,
     private router: Router,
     private lunchPlanService: LunchPlanService) {
+      this.savedUsername = localStorage.getItem('username') || '';
     }
   
   onSubmit() {
-    this.lunchPlanService.create().subscribe(result => {
-      this.change.emit(result);
-      this.code = result.code;
-      // console.log(this.code);
-      this.goToLunchPlan();
+    if (!this.isValidUsername(this.username)) {
+      this.displayError = true;
+    }
+    this.lunchPlanService.create(this.username).subscribe({
+      next: (data) => {
+        this.change.emit(data);
+        this.submitted = true;
+        this.code = data.code;
+        localStorage.setItem('username', this.username);
+        this.goToLunchPlan();
+      },
+      error: (err) => this.displayError = true
     });
+  }
+
+  isValidUsername(code: string): boolean {
+    const pattern = /^[a-zA-Z0-9]*$/; // Alphanumeric pattern
+    return pattern.test(code);
   }
 
   goToLunchPlan() {

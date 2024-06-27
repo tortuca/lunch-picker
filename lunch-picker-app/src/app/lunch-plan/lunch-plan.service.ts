@@ -3,6 +3,8 @@ import { LunchPlan } from './lunch-plan';
 import { Observable } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 
+import { environment } from '../../environment/environment';
+
 @Injectable({
   providedIn: 'root'
 })
@@ -10,11 +12,11 @@ export class LunchPlanService {
   private apiUrl: string;
 
   constructor(private http: HttpClient) {
-    this.apiUrl = 'http://localhost:8080/plan';
+    this.apiUrl = `${environment.apiUrl}/plan`;
   }
 
-  public create() {
-    return this.http.post<LunchPlan>(this.apiUrl, {});
+  public create(username: string) {
+    return this.http.post<LunchPlan>(this.apiUrl, username, {});
   }
 
   public get(code: string): Observable<LunchPlan> {
@@ -27,8 +29,8 @@ export class LunchPlanService {
     return this.http.post<LunchPlan>(url, venue, {});
   }
 
-  public close(code: string) {
+  public close(code: string, username: string) {
     const url = `${this.apiUrl}/${code}/close`;
-    return this.http.post<LunchPlan>(url, {});
+    return this.http.post<LunchPlan>(url, username, {});
   }
 }

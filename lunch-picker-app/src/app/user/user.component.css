@@ -1,0 +1,28 @@
+.wrapper {
+    margin: 0.8em;
+}
+
+.margin-top {
+    margin-top: 1em;
+}
+
+.user-name {
+    margin-left: 0.4em;
+}
+
+.user-profile {
+    position: fixed;
+    top: 16px;
+    right: 16px;
+    font-size: 0.9em;
+}
+
+.editable-input {
+    /* width: 28px; */
+    margin-left: 4px;
+    border: none;
+    outline: none;
+    background-color: transparent;
+    color: white;
+    font-style: italic;
+}

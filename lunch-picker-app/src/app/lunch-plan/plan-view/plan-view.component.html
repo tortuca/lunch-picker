@@ -1,29 +1,33 @@
 <div class="wrapper text-center" *ngIf="plan.id">
+    <app-user (change)="onChangeUsername($event)"></app-user>
     <div class="top">
         <h2>Code: {{ plan.code }}</h2>
         <p *ngIf="choice">
-            The winner is: <span class="font-weight-bold">{{ choice }}</span>
+            The winner is <span class="font-weight-bold">{{ choice }}</span>
         </p>
         <app-venue-form *ngIf="!choice" [plan]="plan" (update)="onNotifyUpdate($event)"
             class="wrapper"></app-venue-form>
     </div>
     <div class="bottom">
         <hr>
-        <div class="row row-button">
+        <div class="row row-margin-bottom">
             <form (ngSubmit)="closePlan()" #closeForm="ngForm">
                 <button type="button" (click)="goHome()"
                   class="btn btn-info"><fa-icon [icon]="faHome"></fa-icon></button>
-                <button type="button" (click)="revealLink()" [disabled]="!isValidPlan()"
+                <button type="button" (click)="revealLink()" [disabled]="disableClose"
                   class="btn btn-info"><fa-icon [icon]="faShareSquare"></fa-icon></button>
-                <button type="submit" [disabled]="!isValidPlan()"
+                <button type="submit" [disabled]="disableClose"
                   class="btn btn-info">Make the choice</button>
             </form>
         </div>
-        <div class="row row-input" *ngIf="showLink">
-            <input type="text" id="link" name="link" [(ngModel)]="url"
-                class="form-control inline-input">
-            <button type="button" (click)="copyLink()"
-              class="btn btn-outline-info inline-button"><fa-icon [icon]="faCopy"></fa-icon></button>
+        <div class="row-margin-bottom" *ngIf="showLink"> 
+            <span>Share link: </span>
+            <div class="row row-input" >
+                <input type="text" id="link" name="link" [(ngModel)]="url"
+                    class="form-control inline-input">
+                <button type="button" (click)="copyLink()"
+                  class="btn btn-outline-info inline-button"><fa-icon [icon]="faCopy"></fa-icon></button>
+            </div>
         </div>
 
         <div class="card-body" *ngIf="isEmptyVenues()">
@@ -32,7 +36,7 @@
                 <li class="list-group-item">{{ place }}</li>
             </ul>
         </div>
-        <div *ngIf="!isEmptyVenues()">
+        <div class="card-body" *ngIf="!isEmptyVenues()">
             No venues yet!
         </div>
     </div>

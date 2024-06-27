@@ -1,0 +1,15 @@
+<h3 class="user-profile badge rounded-pill bg-secondary" (click)="editUsername()">
+    <div>
+        <fa-icon [icon]="faUser"></fa-icon> 
+        <span class="user-name" *ngIf="!editable">{{ username }}</span>
+        <input *ngIf="editable" type="text" [(ngModel)]="username" 
+            id="username"
+            name="username"
+            placeholder="Enter username"
+            maxlength="32"
+            class="editable-input"
+            pattern="^[a-zA-Z0-9]*$"
+            (keydown.enter)="save($event)"
+            (dblclick)="save($event)">
+    </div>
+</h3>

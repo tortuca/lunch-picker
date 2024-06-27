@@ -1,6 +1,24 @@
 <div>
     <form (ngSubmit)="onSubmit()" #planForm="ngForm">
-      <button type="submit" [disabled]="!planForm.form.valid"
-        class="btn btn-info">Get started</button>
+      <div class="row row-input">
+        <div class="input-container">
+          <p id="hello" *ngIf="savedUsername">Hello, {{ savedUsername }}!</p>
+          <input type="text" *ngIf="!savedUsername" [(ngModel)]="username"
+            class="form-control inline-input"
+            id="username"
+            name="username"
+            placeholder="Enter username"
+            maxlength="32"
+            pattern="^[a-zA-Z0-9]*$"
+            required>
+          <button type="submit" [disabled]="!planForm.form.valid"
+            class="btn btn-info inline-button">Get started</button>
+
+        </div>
+      </div>
+
+      <div class="row form-error" *ngIf="displayError">
+        <p>Only alphanumeric characters allowed.</p>
+      </div>
     </form>
 </div>

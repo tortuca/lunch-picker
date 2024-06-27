@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
+import { Router } from '@angular/router';
 import { LunchPlanService } from '../lunch-plan.service';
 import { LunchPlan } from '../lunch-plan';
-import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'app-code-form',
@@ -11,20 +11,27 @@ import { ActivatedRoute, Router } from '@angular/router';
 export class CodeFormComponent {
 
   plan: LunchPlan;
-  displayError: boolean = false;
+  displayError = false;
 
   constructor(
-    private route: ActivatedRoute,
     private router: Router,
     private lunchPlanService: LunchPlanService) {
       this.plan = new LunchPlan();     
     }
   
   onSubmit() {
+    if (!this.isValidCode(this.plan?.code)) {
+      this.displayError = true;
+    }
     this.lunchPlanService.get(this.plan?.code).subscribe({
       next: () => this.goToLunchPlan(),
       error: () => this.displayError = true
     });
+  }
+
+  isValidCode(code: string): boolean {
+    const codePattern = /^[a-zA-Z0-9]*$/; // Alphanumeric pattern
+    return codePattern.test(code);
   }
 
   goToLunchPlan() {

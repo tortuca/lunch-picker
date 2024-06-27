@@ -9,12 +9,16 @@
         placeholder="Enter code"
         maxlength="6"
         required
+        pattern="^[a-zA-Z0-9]*$"
         #code="ngModel">
       <button type="submit" [disabled]="!codeForm.form.valid"
         class="btn btn-info inline-button">Go!</button>
     </div>
+    <div class="row form-error" *ngIf="code.errors && (code.dirty || code.touched)">
+      <p *ngIf="code.errors['pattern']">Only alphanumeric characters allowed.</p>
+    </div>
     <div class="row form-error" *ngIf="displayError">
-        <p>Session not found!</p>
+      <p>Session not found!</p>
     </div>
   </form>
 </div>

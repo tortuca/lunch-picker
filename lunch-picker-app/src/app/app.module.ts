@@ -3,6 +3,8 @@ import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 import { HttpClientModule } from '@angular/common/http';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 
 import { AppRoutingModule } from './app.routes';
 import { AppComponent } from './app.component';
@@ -12,9 +14,7 @@ import { VenueFormComponent } from './lunch-plan/venue-form/venue-form.component
 import { PlanViewComponent } from './lunch-plan/plan-view/plan-view.component';
 import { LunchPlanService } from './lunch-plan/lunch-plan.service';
 import { LunchPlanComponent } from './lunch-plan/lunch-plan.component';
-import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
-import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
-import { ModalShareComponent } from './lunch-plan/modal-share/modal-share.component';
+import { UserComponent } from './user/user.component';
 
 @NgModule({
   imports: [
@@ -28,12 +28,12 @@ import { ModalShareComponent } from './lunch-plan/modal-share/modal-share.compon
   ],
   declarations: [
     AppComponent,
+    UserComponent,
     LunchPlanComponent,
     CodeFormComponent,
     VenueFormComponent,
     PlanFormComponent,
-    PlanViewComponent,
-    ModalShareComponent
+    PlanViewComponent
   ],
   providers: [LunchPlanService],
   bootstrap: [AppComponent]

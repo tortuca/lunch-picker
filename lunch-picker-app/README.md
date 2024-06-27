@@ -16,10 +16,10 @@ Run `ng build` to build the project. The build artifacts will be stored in the `
 
 ### Build container
 ```
-docker build -t lunch-picker-app .
+DOCKER_BUILDKIT=0 docker build -t lunch-picker-app .
 ```
 
 ### Run container
 ```
-docker run -it -p 80:80 lunch-picker-app
+docker run -it -p 4200:4200 lunch-picker-app
 ```

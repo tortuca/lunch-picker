@@ -1,0 +1,19 @@
+.row-input {
+    display: flex;
+    align-items: center;
+  }
+  
+.input-container {
+    flex: 1;
+    display: flex;
+    align-items: center;
+}
+
+#hello {
+    margin-top: 12px;
+    margin-right: 12px;
+}
+  
+#username {
+    flex: 1;
+}

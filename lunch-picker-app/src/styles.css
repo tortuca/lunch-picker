@@ -14,3 +14,10 @@ body { margin: 0; font-family: "Inter", "Segoe UI", Roboto, "Helvetica Neue", sa
 .inline-button {
     width: auto;
 }
+
+.form-error {
+    margin-top: 0.5em;
+    color: #E53D00;
+    font-size: small;
+    font-weight: 500;
+}

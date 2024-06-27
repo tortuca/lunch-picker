@@ -1,7 +1,8 @@
 <div class="text-center">
     <div class="content" style="margin-bottom: 16rem;">
         <h1>Lunch Picker</h1>
-        <app-plan-form></app-plan-form>
+        <app-user (change)="onChangeUsername($event)"></app-user>
+        <app-plan-form [username]="username"></app-plan-form>
     </div>
     <div class="panel">
         <app-code-form></app-code-form>

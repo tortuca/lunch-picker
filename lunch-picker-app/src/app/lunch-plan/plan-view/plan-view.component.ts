@@ -17,8 +17,9 @@ export class PlanViewComponent implements OnInit {
   venue: string = '';
   choice: string = '';
   url: string = '';
-  enableClose: boolean = false;
+  disableClose: boolean = false;
   showLink: boolean = false;
+  username = localStorage.getItem('username') || '';
 
   // font awesome
   faHome = faHome;
@@ -37,7 +38,6 @@ export class PlanViewComponent implements OnInit {
       const code = this.route.snapshot.params['code'];
       if (code !== undefined && code.length !== 0) {
         this.getPlan(code);
-        this.enableClose = this.isValidPlan();
       }
     })
   }
@@ -48,40 +48,44 @@ export class PlanViewComponent implements OnInit {
     }
   }
 
+  /* API service calls */
+
   getPlan(code: string) {
     this.lunchPlanService.get(code).subscribe({
       next: data => {
         this.plan = data;
         this.choice = this.plan.choice;
+        this.disableClose = !this.isPlanClosable();
       },
-      error: err => console.log(err)
+      error: err => {
+        console.log(err);
+        this.goHome();
+      }
     });
   }
 
   closePlan() {
-    this.lunchPlanService.close(this.plan?.code).subscribe({
+    this.lunchPlanService.close(this.plan?.code, this.username).subscribe({
       next: data => {
-        this.choice = data.choice;
-        this.enableClose = this.isValidPlan();
+        this.plan = data;
+        this.choice = this.plan.choice;
+        this.disableClose = !this.isPlanClosable();
       },
-      error: err => console.log(err)
+      error: err => this.disableClose = true
     });
   }
 
-  goToLunchPlan() {
-    this.router.navigate(['/plan/', this.plan.code]);
-  }
-
-  goHome() {
-    this.router.navigate(['']);
-  }
+  /* Utility functions */
 
   isEmptyVenues() {
-    return (this.plan.venues.length !== 0);
+    return (this.plan?.venues.length !== 0);
   }
   
-  isValidPlan() {
-    return this.plan.active || this.choice === undefined;
+  isPlanClosable() {
+    if (this.username === undefined || this.username.length === 0) {
+      return false;
+    }
+    return this.plan?.active === true || this.plan?.choice === undefined;
   }
 
   revealLink() {
@@ -103,7 +107,21 @@ export class PlanViewComponent implements OnInit {
     );
   }
 
+  /* Navigation */
+
+  goToLunchPlan() {
+    this.router.navigate(['/plan/', this.plan.code]);
+  }
+
+  goHome() {
+    this.router.navigate(['']);
+  }
+
   onNotifyUpdate(plan: LunchPlan) {
     this.plan = plan;
+  }
+
+  onChangeUsername(event: Event) {
+    this.username = localStorage.getItem('username') || '';
   }
 }

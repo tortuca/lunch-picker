@@ -4,8 +4,9 @@ import { PlanViewComponent } from './lunch-plan/plan-view/plan-view.component';
 import { LunchPlanComponent } from './lunch-plan/lunch-plan.component';
 
 export const routes: Routes = [
-    { path: 'plan/:code', component: PlanViewComponent },
     { path: '', component: LunchPlanComponent },
+    { path: '*', component: LunchPlanComponent },
+    { path: 'plan/:code', component: PlanViewComponent }
 ];
 
 @NgModule({

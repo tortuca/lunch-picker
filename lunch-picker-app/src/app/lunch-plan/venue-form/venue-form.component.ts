@@ -21,10 +21,13 @@ export class VenueFormComponent {
 
   onSubmit() {
     if (this.newVenue.length === 0) return;
-    this.lunchPlanService.addVenue(this.plan.code, this.newVenue).subscribe(result => {
-      // this.goToLunchPlan();
-      this.update.emit(result);
-      this.newVenue = '';
+    this.lunchPlanService.addVenue(this.plan.code, this.newVenue).subscribe({
+      next: (data) => {
+        // this.goToLunchPlan();
+        this.update.emit(data);
+        this.newVenue = '';
+      },
+      error: (err) => console.log(err)
     });
   }
 
