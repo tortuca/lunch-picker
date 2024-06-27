@@ -203,5 +203,8 @@ Then go to `http://localhost:4200`.
 
 ## Screenshots
 
+Lunch Picker landing page
 ![Lunch Picker landing page](screenshots/lunch-picker-app.png)
+
+Lunch Picker adding venues
 ![Lunch Picker adding venues](screenshots/lunch-picker-app-venues.png)
