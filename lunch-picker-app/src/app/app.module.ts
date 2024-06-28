@@ -15,6 +15,7 @@ import { PlanViewComponent } from './lunch-plan/plan-view/plan-view.component';
 import { LunchPlanService } from './lunch-plan/lunch-plan.service';
 import { LunchPlanComponent } from './lunch-plan/lunch-plan.component';
 import { UserComponent } from './user/user.component';
+import { WebSocketService } from './web-socket.service';
 
 @NgModule({
   imports: [
@@ -35,7 +36,7 @@ import { UserComponent } from './user/user.component';
     PlanFormComponent,
     PlanViewComponent
   ],
-  providers: [LunchPlanService],
+  providers: [LunchPlanService, WebSocketService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

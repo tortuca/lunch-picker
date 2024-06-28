@@ -4,6 +4,8 @@ import { LunchPlan } from '../lunch-plan';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { faHome, faShareSquare, faCopy } from '@fortawesome/free-solid-svg-icons';
+import { WebSocketService } from '../../web-socket.service';
+import { IMessage } from '@stomp/stompjs';
 
 @Component({
   selector: 'app-plan-view',
@@ -29,7 +31,8 @@ export class PlanViewComponent implements OnInit {
   constructor(
     private route: ActivatedRoute,
     private router: Router,
-    private lunchPlanService: LunchPlanService) {
+    private lunchPlanService: LunchPlanService,
+    private webSocketService: WebSocketService) {
       this.plan = new LunchPlan();
   }
 
@@ -38,6 +41,7 @@ export class PlanViewComponent implements OnInit {
       const code = this.route.snapshot.params['code'];
       if (code !== undefined && code.length !== 0) {
         this.getPlan(code);
+        this.subscribeWebSocket(code);
       }
     })
   }
@@ -72,6 +76,16 @@ export class PlanViewComponent implements OnInit {
         this.disableClose = !this.isPlanClosable();
       },
       error: err => this.disableClose = true
+    });
+  }
+
+  subscribeWebSocket(code: string) {
+    let stompClient = this.webSocketService.connect();
+    stompClient.connect({}, () => {
+        stompClient.subscribe(`/topic/notify/${code}`, (data: IMessage) => {
+            // console.log(data.body);
+            this.plan = JSON.parse(data.body); 
+        })
     });
   }
 
