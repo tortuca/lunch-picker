@@ -1,7 +1,7 @@
 <h3 class="user-profile badge rounded-pill bg-secondary" (click)="editUsername()">
     <div>
         <fa-icon [icon]="faUser"></fa-icon> 
-        <span class="user-name" *ngIf="!editable">{{ username }}</span>
+        <span [ngClass]="{'user-name': username}" *ngIf="!editable">{{ username }}</span>
         <input *ngIf="editable" type="text" [(ngModel)]="username" 
             id="username"
             name="username"
