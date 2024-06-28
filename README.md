@@ -9,8 +9,8 @@ Access the web application at `http://localhost:4200`.
 2. The session will have a unique identifier of 6 alphanumeric characters. The code can be copied and shared to other users.
 3. All users can submit one or more restaurant venues, and are able to see all other restaurants that others have submitted.
 4. The creator of the session may end the session.
-    a. A restaurant is randomly picked from all the submitted restaurants.
-    b. All users in the session are able to see the picked restaurant, and may not add any more restaurants.
+    * A restaurant is randomly picked from all the submitted restaurants.
+    * All users in the session are able to see the picked restaurant, and may not add any more restaurants.
 
 ## Dependencies
 * Spring Boot 3.3
