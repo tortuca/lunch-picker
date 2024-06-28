@@ -41,7 +41,9 @@ export class PlanViewComponent implements OnInit {
       const code = this.route.snapshot.params['code'];
       if (code !== undefined && code.length !== 0) {
         this.getPlan(code);
-        this.subscribeWebSocket(code);
+        if (this.plan.active) {
+          this.subscribeWebSocket(code);
+        }
       }
     })
   }

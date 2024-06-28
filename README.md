@@ -20,8 +20,9 @@ Access the web application at `http://localhost:4200`.
 ## Design Decisions
 * Basic validation (max length and alphanumeric characters only) is applied on form inputs
 * Test cases have been implemented in the backend service and should be run on build.
-* The Angular frontend and Spring Boot / Java backend can be run separately according to their individual README. A `docker-compose` file has been provided for convenience of deploying both services (#Deployment).
+* The Angular frontend (`lunch-picker-app`) and Spring Boot / Java backend (`lunch-picker-backend`) can be run separately according to their individual README. A `docker-compose` file has been provided for convenience of deploying both services - see [Deployment](#Deployment).
 * An in-memory H2 database is included for development, and should be switched to a full-scale SQL database for production.
+* Lunch plan is updated to other users through an open WebSocket session, such that they can see real-time updates to the restaurant venues and closure of the session with the final choice of venue.
 * For scalability, the application could be deployed as multiple instances with load balancers and horizontally scaled database.
 
 ## API Specifications
@@ -187,8 +188,24 @@ Example output
     "createdAt":"<created_at>"
 }
 ```
-
 ## Deployment
+
+### Running the app
+
+Backend server will run at `http://localhost:8080`.
+Angular app will run at `http://localhost:4200`.
+
+```
+## backend
+cd lunch-picker-backend
+./gradlew build
+java -jar build/libs/lunch-picker-1.0.0.jar
+
+## frontend
+cd ..
+cd lunch-picker-app
+ng serve
+```
 
 ### Building the app
 
@@ -220,4 +237,4 @@ Lunch Picker adding venues
 ## Future improvements
 
 * Add API authorisation for backend service to ensure limited access to trusted apps.
-* Add username and password to increase security if required. Username-only is for convenience, where user does not need to setup an account just to use the LunchPickerApp.
+* Add authentication with username and password to increase security if required. Username-only is for convenience, where user does not need to setup an account just to use the LunchPickerApp.
