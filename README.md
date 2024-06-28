@@ -5,20 +5,23 @@ Lunch Picker - an app to collectively choose a restaurant for lunch.
 ## Usage
 Access the web application at `http://localhost:4200`.
 
-1. A user shall enter a username, before starting a session. 
+1. A user shall enter a username, before starting a session.
 2. The session will have a unique identifier of 6 alphanumeric characters. The code can be copied and shared to other users.
 3. All users can submit one or more restaurant venues, and are able to see all other restaurants that others have submitted.
 4. The creator of the session may end the session.
     a. A restaurant is randomly picked from all the submitted restaurants.
     b. All users in the session are able to see the picked restaurant, and may not add any more restaurants.
 
+## Dependencies
+* Spring Boot 3.3
+* Java 21
+* Angular 18
+
 ## Design Decisions
-
-This application uses Spring Boot, Java 21 and Angular 18. An in-memory H2 database is included for development, and should be switched to a full-scale SQL database for production.
-
 * Basic validation (max length and alphanumeric characters only) is applied on form inputs
 * Test cases have been implemented in the backend service and should be run on build.
 * The Angular frontend and Spring Boot / Java backend can be run separately according to their individual README. A `docker-compose` file has been provided for convenience of deploying both services (#Deployment).
+* An in-memory H2 database is included for development, and should be switched to a full-scale SQL database for production.
 * For scalability, the application could be deployed as multiple instances with load balancers and horizontally scaled database.
 
 ## API Specifications
@@ -190,6 +193,10 @@ Example output
 ### Building the app
 
 ```
+cd lunch-picker-backend
+./gradlew clean build
+
+cd ..
 docker compose build
 ```
 
@@ -208,3 +215,9 @@ Lunch Picker landing page
 
 Lunch Picker adding venues
 ![Lunch Picker adding venues](screenshots/lunch-picker-app-venues.png)
+
+
+## Future improvements
+
+* Add API authorisation for backend service to ensure limited access to trusted apps.
+* Add username and password to increase security if required. Username-only is for convenience, where user does not need to setup an account just to use the LunchPickerApp.
