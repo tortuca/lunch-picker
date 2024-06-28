@@ -6,9 +6,11 @@ import com.tortuca.lunchpicker.service.UserService;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.mockito.Mock;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.HttpStatus;
+import org.springframework.messaging.simp.SimpMessagingTemplate;
 
 import java.util.List;
 
@@ -30,13 +32,15 @@ public class LunchControllerTest {
     private LunchPlanController controller;
 
     @Autowired
+    private SimpMessagingTemplate template;
+    @Autowired
     private LunchPlanRepository lunchPlanRepository;
     @Autowired
     private UserService userService;
 
     @BeforeEach
     public void setUp() {
-        controller = new LunchPlanController(lunchPlanRepository, userService);
+        controller = new LunchPlanController(lunchPlanRepository, userService, template);
     }
 
     @Test

@@ -7,6 +7,7 @@ import com.tortuca.lunchpicker.repository.LunchPlanRepository;
 import com.tortuca.lunchpicker.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
@@ -19,18 +20,23 @@ import java.util.regex.Pattern;
 @Controller
 @CrossOrigin(origins = "${cors.origin}")
 public class LunchPlanController {
+
+    private final SimpMessagingTemplate template;
     private final LunchPlanRepository lunchPlanRepository;
     private final UserService userService;
 
     private static final int CODE_LENGTH = 6;
     private static final int MAX_ATTEMPTS = 3;
+    private static final String NOTIF_TEMPLATE = "/topic/notify/%s";
 
     @Autowired
     public LunchPlanController(
             LunchPlanRepository lunchPlanRepository,
-            UserService userService) {
+            UserService userService,
+            SimpMessagingTemplate simpMessagingTemplate) {
         this.lunchPlanRepository = lunchPlanRepository;
         this.userService = userService;
+        this.template = simpMessagingTemplate;
     }
 
     @GetMapping("/hello")
@@ -106,6 +112,8 @@ public class LunchPlanController {
 
         plan.addVenue(venue.trim());
         LunchPlan saved = lunchPlanRepository.save(plan);
+        // sends out updates through websocket
+        template.convertAndSend(String.format(NOTIF_TEMPLATE, code), saved);
         return ResponseEntity.ok(saved);
     }
 
@@ -145,7 +153,10 @@ public class LunchPlanController {
         plan.setChoice(choice);
 
         LunchPlan saved = lunchPlanRepository.save(plan);
-        System.out.printf("%s %s\n", saved.getCode(), choice);
+
+        // sends out updates through websocket
+        template.convertAndSend(String.format(NOTIF_TEMPLATE, code), saved);
+        System.out.printf("%s - the choice is %s\n", saved.getCode(), choice);
         return ResponseEntity.ok(saved);
     }
 
