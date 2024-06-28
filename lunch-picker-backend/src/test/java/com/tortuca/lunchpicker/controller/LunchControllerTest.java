@@ -17,11 +17,11 @@ import static org.junit.jupiter.api.Assertions.assertFalse;
 
 @SpringBootTest
 public class LunchControllerTest {
-    private static final String CODE_INVALID = "NO_CODE";
+    private static final String CODE_INVALID = "NOCODE";
 
     private static final String VENUE_1 = "Best Roti Prata";
     private static final String VENUE_2 = "Dry Ban Mian";
-    private static final String VENUE_3 = "Hainanese Chicken RIce";
+    private static final String VENUE_3 = "Hainanese Chicken Rice";
 
     private static final String USERNAME_1 = "test_user";
     private static final String USERNAME_INVALID = "invalid_user";

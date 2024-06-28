@@ -14,6 +14,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
 import java.util.UUID;
+import java.util.regex.Pattern;
 
 @Controller
 @CrossOrigin(origins = "${cors.origin}")
@@ -43,13 +44,19 @@ public class LunchPlanController {
 
     @PostMapping("/plan")
     public ResponseEntity<LunchPlan> createPlan(@RequestBody String username) {
+        if (username == null || username.isEmpty()) {
+            return ResponseEntity.badRequest().build();
+        }
+        if (username.trim().isEmpty() || !isValidUsername(username.trim())) {
+            return ResponseEntity.badRequest().build();
+        }
+
         String code = generateUniqueCode();
         LunchPlan plan = new LunchPlan(UUID.randomUUID(), code);
-        String newUsername = stripCharacters(username.trim());
 
-        Optional<User> user = userService.getUser(newUsername);
+        Optional<User> user = userService.getUser(username.trim());
         if (user.isEmpty()) {
-            user = userService.createUser(newUsername);
+            user = userService.createUser(username.trim());
         }
         if (user.isEmpty()) {
             return ResponseEntity.badRequest().build();
@@ -63,6 +70,12 @@ public class LunchPlanController {
 
     @GetMapping("/plan/{code}")
     public ResponseEntity<LunchPlan> getPlan(@PathVariable String code) {
+        if (code == null || code.isEmpty()) {
+            return ResponseEntity.badRequest().build();
+        }
+        if (code.trim().isEmpty() || !isValidCode(code.trim())) {
+            return ResponseEntity.badRequest().build();
+        }
         LunchPlan found = lunchPlanRepository.findByCode(code);
         if (found == null) {
             return ResponseEntity.notFound().build();
@@ -72,6 +85,12 @@ public class LunchPlanController {
 
     @PostMapping("/plan/{code}/add")
     public ResponseEntity<LunchPlan> addVenue(@PathVariable String code, @RequestBody String venue) {
+        if (code == null || code.isEmpty()) {
+            return ResponseEntity.badRequest().build();
+        }
+        if (code.trim().isEmpty() || !isValidCode(code.trim())) {
+            return ResponseEntity.badRequest().build();
+        }
         LunchPlan plan = lunchPlanRepository.findByCode(code);
         if (plan == null || !plan.getActive()) {
             return ResponseEntity.notFound().build();
@@ -92,13 +111,25 @@ public class LunchPlanController {
 
     @PostMapping("/plan/{code}/close")
     public ResponseEntity<LunchPlan> closePlan(@PathVariable String code, @RequestBody String username) {
+        if (code == null || code.isEmpty()) {
+            return ResponseEntity.badRequest().build();
+        }
+        if (code.trim().isEmpty() || !isValidCode(code.trim())) {
+            return ResponseEntity.badRequest().build();
+        }
+        if (username == null || username.isEmpty()) {
+            return ResponseEntity.badRequest().build();
+        }
+        if (username.trim().isEmpty() || !isValidUsername(username.trim())) {
+            return ResponseEntity.badRequest().build();
+        }
+
         LunchPlan plan = lunchPlanRepository.findByCode(code);
-        String newUsername = stripCharacters(username.trim());
         if (plan == null || !plan.getActive()) {
             return ResponseEntity.notFound().build();
         }
 
-        Optional<User> user = userService.getUser(newUsername);
+        Optional<User> user = userService.getUser(username.trim());
         if (user.isEmpty()|| !plan.getUserId().equals(user.get().getId())) {
             // lunch plan can only be closed by user
             System.out.println(user.isPresent() ? user.get().getUsername() : "No such user");
@@ -154,7 +185,13 @@ public class LunchPlanController {
         return plan.getVenues().get(choice);
     }
 
-    public static String stripCharacters(String input) {
-        return input.trim().replaceAll("[^\\w\\s]","");
+    public static boolean isValidCode(String input) {
+        final Pattern VALID_CODE = Pattern.compile("^[a-zA-Z0-9]*$");
+        return input != null && VALID_CODE.matcher(input).matches();
+    }
+
+    public static boolean isValidUsername(String input) {
+        final Pattern VALID_USERNAME = Pattern.compile("^[a-zA-Z0-9_.]*$");
+        return input != null && VALID_USERNAME.matcher(input).matches();
     }
 }
